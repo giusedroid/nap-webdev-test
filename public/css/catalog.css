@@ -1,0 +1,153 @@
+/*********DESKTOP*********/
+
+desktop .sm-main{
+    height: 100%;
+    width: 100%;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+desktop .sm-navigation{
+    border-right: 2px dotted #AAA;
+    height: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+desktop .sm-contents{
+    background: #FFF;
+    height: 100%;
+}
+
+desktop .row.header{
+    text-align:center;
+    width: 85%;
+    height: 10%;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+desktop .header h1{
+    color: #000;
+    font-size: 30px;
+}
+
+desktop .logo{
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right:auto;
+    margin-top: 20px;
+}
+
+desktop .top{
+    height:10%;
+}
+
+desktop .showroom{
+    height:80%;
+}
+
+desktop .product-preview-wrapper{
+    /*border: 1px solid black;*/
+    height: 100%;
+    width: 100%;
+    margin: auto;
+}
+
+desktop .pagination{
+    height: 10%;
+    width: 100%;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom:0px;
+    margin-top:0px;
+    padding-top:20px;
+}
+
+desktop .product-preview{
+    width:100%;
+}
+
+desktop .product-preview img{
+    margin:auto;
+}
+/*********MOBILE************/
+
+mobile .navbar-header {
+    background: #FFF;
+    border-bottom: 2px dotted #AAA;
+}
+mobile .nav{
+    border: 0px;
+}
+mobile .navbar-inverse{
+    background-color: #FFF;
+    border: 0px;
+}
+mobile h1{
+    color: #000;
+    padding: 20px;
+    font-size: 24px;
+    margin-top:10px;
+}
+
+mobile a.button{
+    float: right;
+    border: 1px solid #AAA;
+    margin-right:20px;
+    margin-top:21px;
+    font-size: 24px;
+    color: #AAA;
+    padding: 4px 14px;
+    background-color: #FFF;
+    cursor: hand;
+}
+
+mobile a.button:hover{
+    text-decoration:none;
+    font-weight: 700;
+}
+
+mobile .mobile-group{
+    height:100%;
+    width:100%;
+    border-bottom: 3px solid #AAA;
+    padding-top: 100px;
+    text-align: center;
+}
+
+mobile .row.forty{
+    height: 45%;
+}
+
+mobile .row.twenty{
+    height: 10%;
+}
+
+mobile .col-xs-6{
+    padding: 5px 10px;
+}
+
+mobile .product-preview-wrapper {
+    height: 100%;
+    width: 100%;
+    /*border: 1px solid black;*/
+}
+
+mobile .pagination {
+    width:100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 24px;
+}
+
+mobile .logo{
+    max-width: 65%;
+    height: auto;
+    margin-top:30px;
+    margin-bottom:30px;
+    margin-left:20px;
+}
+
+mobile .product-preview{
+    width:100%;
+}
