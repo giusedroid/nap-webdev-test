@@ -39,11 +39,11 @@ desktop .logo{
 }
 
 desktop .top{
-    height:10%;
+    height:25%;
 }
 
 desktop .showroom{
-    height:80%;
+    height:65%;
 }
 
 desktop .product-preview-wrapper{
@@ -94,7 +94,7 @@ mobile a.button{
     float: right;
     border: 1px solid #AAA;
     margin-right:20px;
-    margin-top:21px;
+    margin-top:8px;
     font-size: 24px;
     color: #AAA;
     padding: 4px 14px;
@@ -110,7 +110,7 @@ mobile a.button:hover{
 mobile .mobile-group{
     height:100%;
     width:100%;
-    border-bottom: 3px solid #AAA;
+    /*border-bottom: 3px solid #AAA;*/
     padding-top: 100px;
     text-align: center;
 }
@@ -134,6 +134,7 @@ mobile .product-preview-wrapper {
 }
 
 mobile .pagination {
+    height:70%;
     width:100%;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -141,13 +142,101 @@ mobile .pagination {
 }
 
 mobile .logo{
-    max-width: 65%;
+    max-width: 50%;
     height: auto;
-    margin-top:30px;
-    margin-bottom:30px;
+    margin-top:20px;
+    margin-bottom:20px;
     margin-left:20px;
 }
 
 mobile .product-preview{
     width:100%;
+}
+
+mobile .img-responsive{
+    margin-right: auto;
+    margin-left: auto;
+    height: 60%;
+    width: auto;
+}
+
+.pagination ul{ 
+    overflow-x:hidden;
+    white-space:nowrap; 
+    height: 100%;
+    width: 100%;
+    margin-bottom:0px;
+} 
+
+.pagination li{ 
+display:inline; 
+}       
+
+.pagination button{
+    border: 0px;
+    margin-right:20px;
+    font-size: 24px;
+    color: #AAA;
+    padding: 4px 14px;
+    background-color: #FFF;
+}
+
+desktop .product-preview h1{
+    font-variant: small-caps;
+    font-size: 24px;
+    text-align: center;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.product-preview{
+    animation-name: appear;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 0.6s;
+}
+
+.pagination button{
+    font-size: 20px;
+}
+
+.pagination .current button{
+    color: #000;
+}
+
+.pagination button:focus{
+    border: 1px solid #000;
+    outline: 0px;
+}
+
+desktop .price{
+    text-align: right;
+    margin-right: 5%;
+}
+
+mobile .product-preview h1{
+    padding: 0px;
+    font-size: 20px;
+    font-variant: small-caps;
+    margin-bottom: 5px;
+}
+
+mobile .pagination ul{
+    padding: 0px;
+}
+
+mobile .pagination button{
+    margin-right: 5px;
+    padding: 5px;
+}
+
+mobile .description{
+    display: none;
 }
