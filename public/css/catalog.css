@@ -162,6 +162,7 @@ mobile .img-responsive{
 
 .pagination ul{ 
     overflow-x:hidden;
+    overflow-y:hidden;
     white-space:nowrap; 
     height: 100%;
     width: 100%;
@@ -169,7 +170,7 @@ mobile .img-responsive{
 } 
 
 .pagination li{ 
-display:inline; 
+    display:inline; 
 }       
 
 .pagination button{
