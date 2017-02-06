@@ -14,7 +14,7 @@ var sorting = {
     }
 };
 
-var mapping = {
+var filtering = {
     designer: dsg => x=> x.brand.name.en === dsg ,
     price: (min, max) => x => x.price.gross / x.price.divisor >= min && x.price.gross / x.price.divisor <= max
 };
@@ -29,15 +29,15 @@ var routes = {
 
             if(req.query.designer){
                 console.log("pushing designer filter");
-                console.log(mapping.designer);
-                console.log(mapping.designer(req.query.designer));
-                filters.push(mapping.designer(req.query.designer));
+                console.log(filtering.designer);
+                console.log(filtering.designer(req.query.designer));
+                filters.push(filtering.designer(req.query.designer));
             }
 
             if(req.query.price){
                 console.log('pushing price filter');
                 var criteria = parseFilters( req.query.price);
-                filters.push(mapping.price(
+                filters.push(filtering.price(
                     parseInt(criteria[0]),
                     parseInt(criteria[1])
                 ));
