@@ -23,7 +23,8 @@ let app;
         },
         render:{
             preview: id => `http://localhost:8200/api/render/product/${id}/preview`,
-            show: id => `http://localhost:8200/api/render/product/${id}/show`
+            show: id => `http://localhost:8200/api/render/product/${id}/show`,
+            designers: `http://localhost:8200/api/render/designers`
         }
     };
 
@@ -31,21 +32,31 @@ let app;
         pagination:{
             li: (offset,label,cssClass) => `<li class='${cssClass? cssClass : ''}'><button onclick='javascript:Catalog.render(${offset})'>${label}</button></li>`,
             symbols:{
-                first: '<span class="glyphicon glyphicon-fast-backward"></span>',
-                last: '<span class="glyphicon glyphicon-fast-forward"></span>',
-                next: '<span class="glyphicon glyphicon-step-forward"></span>',
-                previous: '<span class="glyphicon glyphicon-step-backward"></span>'
+                first: '&lt;&lt',
+                last: '&gt;&gt;',
+                next: '&gt;',
+                previous: '&lt;'
             }
         }
     };
 
+    const utils = {
+        scroll: function(dScroll){
+            console.log(this.scrollTop);
+            this.scrollTop += dScroll;
+        }
+    };
+
     let Application = function () {
-        this.filter = {};
+        this.filter = {
+            sort:['price','ascending']
+        };
         this.offset = 0;
         this.limit = 4;
         this.total = null;
 
         this.loadComponents();
+        this.setUpEventListeners();
     };
     
     Application.prototype.loadComponents = function(){
@@ -55,11 +66,56 @@ let app;
                 mobile: document.querySelectorAll('mobile .product-preview-wrapper'),
                 desktop : document.querySelectorAll('desktop .product-preview-wrapper')
             },
-            pagination: document.querySelectorAll('.pagination ul')
+            pagination: document.querySelectorAll('.pagination ul'),
+            designers: {
+                contents: document.querySelector('desktop .designer-contents '),
+                up: document.querySelector('desktop .up button'),
+                down: document.querySelector('desktop .down button'),
+                clear: document.querySelector('desktop .clear button'),
+                ul: document.getElementById('designer-list')
+            }
         };
-        
-        
     };
+
+    Application.prototype.setUpEventListeners = function(){
+
+        this.$components.designers.up.onclick = utils.scroll.bind(this.$components.designers.contents, -20);
+        this.$components.designers.down.onclick = utils.scroll.bind(this.$components.designers.contents, 20);
+        
+        this.$components.designers.clear.onclick = () => {
+            this.clearFilters( 'designer');
+            let lis = Array.prototype.slice.call( Catalog.$components.designers.ul.children);
+            console.log( lis );
+            for( let i in lis ){
+               
+                    lis[i].setAttribute('data-toggle', 'off');
+
+                //console.log( Catalog.$components.designers.ul.children[li].getAttribute('data-toggle'));
+            }
+        };
+
+        this.$components.designers.ul.addEventListener('click', (e) =>{
+            if (e.target.tagName === 'LI') {
+                e.stopPropagation();
+                if(!this.filter.designer){
+                    this.filter.designer = [];
+                }
+                if( e.target.getAttribute('data-toggle')==='off'){
+                    this.filter.designer.push(e.target.getAttribute('data-designer'));
+                    e.target.setAttribute('data-toggle', 'on');
+                }else{
+                    e.target.setAttribute('data-toggle','off');
+                    let index = this.filter.designer.indexOf( e.target.getAttribute('data-designer'));
+                    if( index >-1){
+                        this.filter.designer.splice(index, 1);
+                    }
+                }
+                
+                console.log( this.filter );
+                this.renderPreview( 0 ).then(this.renderPagination.bind(this));
+            }
+        });
+    }
 
     Application.prototype.parseFilters = function(oFilter){
         /*
@@ -72,10 +128,11 @@ let app;
          */
         let queryString = '';
 
-        for( filter in oFilter){
-            let concat = oFilter[filter].join(',');
+        for( let filter in oFilter){
+            let concat = oFilter[filter].map( x => escape(x.replace(/\.|\+|\-|\ |\&|\,/g, '')) ).join(',');
             queryString += `${filter}=${concat}&`
         }
+        console.log(queryString);
         return queryString.slice(0,-1);
     };
 
@@ -123,6 +180,17 @@ let app;
             .then( res => this.buildProductPipeline(res) )
             .then( html => this.updatePreviewElements(html) )
     };
+
+    Application.prototype.clearFilters = function( target ){
+        if(!target){
+            this.filter = {};
+        }else{
+            delete this.filter[ target ];
+        }
+
+        this.render(0);
+
+    }
 
     Application.prototype.next = function(){
         let newOffset = this.offset + this.limit;
@@ -216,6 +284,12 @@ let app;
             .then(this.renderPagination.bind(this));
     };
 
+    Application.prototype.renderDesigners = function(){
+        return fetch(apis.render.designers)
+            .then( res => res.text())
+            .then( res => this.$components.designers.ul.innerHTML = res)
+    };
+
     module.Application = Application;
 
 })( app || (app = {}) );
@@ -227,5 +301,6 @@ ready(
     function(){
         Catalog = new app.Application();
         Catalog.render(0);
+        Catalog.renderDesigners();
     }
 );

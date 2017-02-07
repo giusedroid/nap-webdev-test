@@ -11,6 +11,9 @@ const routes = {
             render.show(req.params.id)
                 .then( result => res.status(200).send( result ) );
         });
+        app.get('/api/render/designers', (req, res) => {
+            render.designers().then( result => res.status(200).send(result));
+        })
     }
 };
 

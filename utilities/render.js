@@ -32,10 +32,22 @@ const renderGen = function * (template, resource){
     return result;
 };
 
+const renderDesignerGen = function * (){
+    debug('Loading designers');
+    let rDesigners = yield fetch(`${config.URL_BASE}/api/designers`);
+    rDesigners = yield rDesigners.json();
+    const templateURI = `${config.ROOT}/views/partials/designers.hbs`;
+    const rTemplate = yield fsp.read(templateURI);
+    const result = hbs.compile(rTemplate.toString())(rDesigners);
+    return result;
+};
+
 const preview = resource => co( renderGen(templates.preview, resource) );
 const show = resource => co( renderGen(templates.show, resource) );
+const designers = () => co( renderDesignerGen() );
 
 module.exports = {
         preview,
-        show
+        show,
+        designers
 };

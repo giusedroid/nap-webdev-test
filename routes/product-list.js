@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../config/config');
 
 // Mock API using fixture so we're not dependent on network connectivity
@@ -9,13 +11,12 @@ var parseFilters = function( filter ){
 
 var sorting = {
     price:{
-        ascending: (x, y) => x.price.gross > y.price.gross ,
-        descending: (x, y) => x.price.gross < y.price.gross
+        ascending: (x, y) => (x.price.gross/ x.price.divisor) - (y.price.gross/y.price.divisor) ,
+        descending: (x, y) => (-(x.price.gross/ x.price.divisor) + (y.price.gross/y.price.divisor))
     }
 };
 
 var filtering = {
-    designer: dsg => x=> x.brand.name.en === dsg ,
     price: (min, max) => x => x.price.gross / x.price.divisor >= min && x.price.gross / x.price.divisor <= max
 };
 
@@ -28,10 +29,17 @@ var routes = {
             var filters = [];
 
             if(req.query.designer){
-                console.log("pushing designer filter");
-                console.log(filtering.designer);
-                console.log(filtering.designer(req.query.designer));
-                filters.push(filtering.designer(req.query.designer));
+                filters.push(
+                    x => {
+                        let output = req.query.designer
+                            .split(',')
+                            .indexOf( 
+                                escape(x.brand.name.en.replace(/\.|\+|\-|\ |\&|\,/g, ''))
+                            ) > -1;
+
+                        return output;
+                    }
+                );
             }
 
             if(req.query.price){
@@ -52,7 +60,7 @@ var routes = {
 
            if(req.query.sort){
                 var criteria = parseFilters( req.query.sort );
-                actualData = actualData.sort(sorting[criteria[0]][criteria[1]]);
+                actualData.sort(sorting[criteria[0]][criteria[1]]);
             }
 
             var data = actualData.slice(offset, offset+limit).map(function(product) {

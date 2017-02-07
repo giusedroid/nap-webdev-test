@@ -23,6 +23,11 @@ var configureRoutes = {
         /******** Server Side Rendering Routes *******/
         const renderingRoutes = require(config.ROOT + '/routes/render');
         renderingRoutes.routes.init(app);
+
+        /******* Designers ******/
+        const designersRoutes = require(config.ROOT + '/routes/designers');
+        designersRoutes.routes.init(app);
+
         
 
 

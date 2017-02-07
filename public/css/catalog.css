@@ -20,7 +20,7 @@ desktop .sm-contents{
 desktop .row.header{
     text-align:center;
     width: 85%;
-    height: 10%;
+    height: 6%;
     margin-right:auto;
     margin-left:auto;
 }
@@ -70,6 +70,100 @@ desktop .product-preview{
 desktop .product-preview img{
     margin:auto;
 }
+
+desktop .pagination button{
+    margin-right: 0px;
+}
+
+desktop .product-preview h1{
+    font-variant: small-caps;
+    font-size: 24px;
+    text-align: center;
+}
+
+desktop .type p{
+    text-align: center;
+    padding: 0 10 0 10;
+}
+
+desktop .sm-navigation h2{
+    width: 50%;
+    border-bottom: 1px dotted black;
+    font-variant: small-caps;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 150%;
+}
+
+desktop .sm-navigation .row{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+desktop .designer-scroller{
+    position: relative;
+}
+
+desktop .designer-scroller .up{
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    height: 20px;
+    width: 20px;
+}
+desktop .designer-scroller .down{
+    position: absolute;
+    right: 5px;
+    top: 30px;
+    height: 20px;
+    width: 20px;
+}
+desktop .designer-scroller .clear{
+    position: absolute;
+    right: 5px;
+    top: 50px;
+    height: 20px;
+    width: 20px;
+}
+desktop .designers{
+    height:30%;
+    overflow: hidden;
+    width:100%;
+}
+desktop .designer-contents{
+    padding-right:35px;
+    height: 100%;
+    width:110%;
+    overflow: scroll;
+}
+
+desktop .up button,.down button,.clear button{
+    background: #FFF;
+    border:0px;
+    outline:0px;
+}
+
+desktop button:focus{
+    outline:0px;
+}
+
+desktop .designer-contents ul{
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+desktop .price{
+    text-align: right;
+    margin-right: 5%;
+}
+
+li[data-toggle="on"]{
+    background-color: #000;
+    color: #FFF;
+}
+
 /*********MOBILE************/
 
 mobile .navbar-header {
@@ -160,6 +254,27 @@ mobile .img-responsive{
     width: auto;
 }
 
+mobile .product-preview h1{
+    padding: 0px;
+    font-size: 20px;
+    font-variant: small-caps;
+    margin-bottom: 5px;
+}
+
+mobile .pagination ul{
+    padding: 0px;
+}
+
+mobile .pagination button{
+    margin-right: 0px;
+    padding: 2px;
+}
+
+mobile .description{
+    display: none;
+}
+ /*******GENERAL****************/
+
 .pagination ul{ 
     overflow-x:hidden;
     overflow-y:hidden;
@@ -180,12 +295,6 @@ mobile .img-responsive{
     color: #AAA;
     padding: 4px 14px;
     background-color: #FFF;
-}
-
-desktop .product-preview h1{
-    font-variant: small-caps;
-    font-size: 24px;
-    text-align: center;
 }
 
 @keyframes appear {
@@ -215,29 +324,4 @@ desktop .product-preview h1{
 .pagination button:focus{
     border: 1px solid #000;
     outline: 0px;
-}
-
-desktop .price{
-    text-align: right;
-    margin-right: 5%;
-}
-
-mobile .product-preview h1{
-    padding: 0px;
-    font-size: 20px;
-    font-variant: small-caps;
-    margin-bottom: 5px;
-}
-
-mobile .pagination ul{
-    padding: 0px;
-}
-
-mobile .pagination button{
-    margin-right: 5px;
-    padding: 5px;
-}
-
-mobile .description{
-    display: none;
 }
