@@ -217,13 +217,13 @@ let app;
                 return { offset, label, current }
             })
             .filter( x => { return x.offset >= 0 })
-            .filter( x => { return x.offset <= (this.total - this.limit)});
+            .filter( x => { return x.offset < (this.total)});
 
         return {
             first: 0,
             current: Math.floor(this.offset / this.limit),
             total: Math.floor(this.total / this.limit),
-            last: this.total - this.limit,
+            last: this.total,
             offsetVector
         }
     };
