@@ -1,6 +1,6 @@
 'use strict';
 
-/* polyfill for $.ready */
+/* mocking $.ready */
 
 function ready(fn) {
   if (document.readyState != 'loading'){
@@ -64,7 +64,8 @@ let app;
         this.$components = {
             preview:{
                 mobile: document.querySelectorAll('mobile .product-preview-wrapper'),
-                desktop : document.querySelectorAll('desktop .product-preview-wrapper')
+                desktop : document.querySelectorAll('desktop .product-preview-wrapper'),
+                all: document.querySelectorAll('.product-preview-wrapper')
             },
             pagination: document.querySelectorAll('.pagination ul'),
             designers: {
@@ -72,10 +73,34 @@ let app;
                 up: document.querySelector('desktop .up button'),
                 down: document.querySelector('desktop .down button'),
                 clear: document.querySelector('desktop .clear button'),
-                ul: document.getElementById('designer-list')
+                ul: document.querySelectorAll('.designer-list')
+            },
+            sort: document.querySelectorAll('.sort'),
+            filterToggle: document.getElementById('mobile-filters'),
+            mobile:{
+                 group: document.querySelectorAll('mobile .mobile-group'),
+                 contents: document.querySelector('mobile .contents'),
+                 filters: document.querySelector('mobile .filters'),
+                 details: document.querySelector('mobile .prduct-detail')
+            },
+            desktop:{
+                group: document.querySelectorAll('desktop .sm-contents'),
+                preview: document.querySelector('desktop .product-preview'),
+                detail: document.querySelector('desktop .product-detail')
+            },
+            show:{
+                mobile: document.querySelector('mobile .product-detail'),
+                desktop: document.querySelector('desktop .product-detail'),
+                all: document.querySelectorAll('.product-detail')
             }
         };
     };
+
+    Application.prototype.clearSort = function(){
+        this.$components.sort.forEach( ul => 
+            Array.prototype.slice.call(ul.children).forEach( li => li.setAttribute('data-toggle', 'off'))
+            );
+    }
 
     Application.prototype.setUpEventListeners = function(){
 
@@ -87,35 +112,109 @@ let app;
             let lis = Array.prototype.slice.call( Catalog.$components.designers.ul.children);
             console.log( lis );
             for( let i in lis ){
-               
                     lis[i].setAttribute('data-toggle', 'off');
-
-                //console.log( Catalog.$components.designers.ul.children[li].getAttribute('data-toggle'));
             }
         };
 
-        this.$components.designers.ul.addEventListener('click', (e) =>{
-            if (e.target.tagName === 'LI') {
-                e.stopPropagation();
-                if(!this.filter.designer){
-                    this.filter.designer = [];
-                }
-                if( e.target.getAttribute('data-toggle')==='off'){
-                    this.filter.designer.push(e.target.getAttribute('data-designer'));
-                    e.target.setAttribute('data-toggle', 'on');
-                }else{
-                    e.target.setAttribute('data-toggle','off');
-                    let index = this.filter.designer.indexOf( e.target.getAttribute('data-designer'));
-                    if( index >-1){
-                        this.filter.designer.splice(index, 1);
+        this.$components.sort.forEach(ul =>{
+            ul.addEventListener('click', (e) => {
+                console.log(e.target);
+                if( e.target.tagName === 'LI'){
+                    if(!this.filter.sort){
+                        this.filter.sort = [];
                     }
+
+                    if( e.target.getAttribute('data-toggle') === 'off'){
+                        e.stopPropagation();
+                        console.log(e.target.getAttribute('data-toggle'));
+                        console.log("Setting sort filter ON");
+                        this.clearSort();
+                        e.target.setAttribute('data-toggle', 'on');
+                        this.filter.sort = ['price', e.target.getAttribute('data-sort')];
+                    }else{
+                        e.stopPropagation();
+                        console.log("Setting sort filter OFF");
+                        this.clearSort();
+                        e.target.setAttribute('data-toggle', 'off');
+                        this.clearFilters('sort');
+                    }
+                    console.log(this.filter);
+                    this.renderPreview( 0 ).then(this.renderPagination.bind(this));
                 }
-                
-                console.log( this.filter );
-                this.renderPreview( 0 ).then(this.renderPagination.bind(this));
-            }
+            });
         });
-    }
+
+        this.$components.designers.ul.forEach(
+            x => {
+                x.addEventListener('click', (e) =>{
+                if (e.target.tagName === 'LI') {
+                    e.stopPropagation();
+                    if(!this.filter.designer){
+                        this.filter.designer = [];
+                    }
+                    if( e.target.getAttribute('data-toggle')==='off'){
+                        this.filter.designer.push(e.target.getAttribute('data-designer'));
+                        e.target.setAttribute('data-toggle', 'on');
+                    }else{
+                        e.target.setAttribute('data-toggle','off');
+                        let index = this.filter.designer.indexOf( e.target.getAttribute('data-designer'));
+                        if( index >-1){
+                            this.filter.designer.splice(index, 1);
+                        }
+                    }
+                    this.renderPreview( 0 ).then(this.renderPagination.bind(this));
+                }
+            });
+            }
+        );
+        
+
+        this.$components.filterToggle.onclick = () => {
+
+            // hide them all
+            this.$components.mobile.group.forEach( x => {
+                if( ! x.classList.contains('hidden')){
+                    x.classList.add('hidden');
+                }
+            });
+
+            if(this.$components.filterToggle.getAttribute('data-toggle')==='off'){
+                this.$components.filterToggle.setAttribute('data-toggle', 'on');
+                this.$components.mobile.filters.classList.remove('hidden');
+            }else{
+                this.$components.filterToggle.setAttribute('data-toggle', 'off');
+                this.$components.mobile.contents.classList.remove('hidden');
+            }
+        };
+
+        const showDesktop = this.$components.preview.desktop;
+        const showMobile = this.$components.preview.mobile;
+
+        [showDesktop, showMobile].forEach(
+            divs => divs.forEach( div  => { 
+                div.addEventListener('click', (e) => {
+                    console.log(e);
+                    if(e.target.tagName === 'IMG'){
+                        e.stopPropagation();
+                        // MMMH
+                        this.renderShowProduct(e.target.getAttribute('data-show'));
+                        this.$components.mobile.group.forEach( x => {
+                            if( ! x.classList.contains('hidden')){
+                                x.classList.add('hidden');
+                            }
+                        });
+                        this.$components.desktop.group.forEach( x => {
+                            if( ! x.classList.contains('hidden')){
+                                x.classList.add('hidden');
+                            }
+                        });
+                        this.$components.show.desktop.classList.remove('hidden');
+                        this.$components.show.mobile.classList.remove('hidden');
+                    }
+                });
+            })
+        );
+    };
 
     Application.prototype.parseFilters = function(oFilter){
         /*
@@ -164,16 +263,21 @@ let app;
     Application.prototype.updatePreviewElements = function(html){
         this.$components.preview.mobile.forEach(
             (each, index) =>{
-                each.innerHTML = html[index];
+                each.innerHTML = html[index] ? html[index] : '';
             }
         );
         this.$components.preview.desktop.forEach(
             (each, index) =>{
-                each.innerHTML = html[index];
+                each.innerHTML = html[index] ? html[index] : '';
             }
         );
         
     };
+
+    Application.prototype.updateShowElements = function (html){
+        this.$components.show.mobile.innerHTML = html;
+        this.$components.show.desktop.innerHTML = html;
+    }
 
     Application.prototype.renderPreview = function(offset){
         return this.loadProducts(offset, this.limit, this.filter)
@@ -270,14 +374,40 @@ let app;
                     );
                 }
 
+                console.log("[Total - Limit]: ", this.total - this.limit);
                  // last
+                 let last = (this.total % this.limit) === 0? this.total - this.limit : this.total - this.total % this.limit;
                 ul.insertAdjacentHTML('beforeend',
-                    templates.pagination.li(this.total - this.limit, templates.pagination.symbols.last)
+                    templates.pagination.li(last, templates.pagination.symbols.last)
                 );
             }
         );
 
     };
+
+    Application.prototype.renderShowProduct = function(id){
+        return fetch(apis.render.show(id))
+                .then( data => data.text())
+                .then(html => this.updateShowElements( html )
+                );
+    }
+
+    Application.prototype.showPreview = function(){
+        this.$components.mobile.group.forEach( x => {
+            if( ! x.classList.contains('hidden')){
+                x.classList.add('hidden');
+            }
+        });
+        this.$components.desktop.group.forEach( x => {
+            if( ! x.classList.contains('hidden')){
+                x.classList.add('hidden');
+            }
+        });
+
+        this.$components.mobile.contents.classList.remove('hidden');
+        this.$components.desktop.preview.classList.remove('hidden');
+    }
+
 
     Application.prototype.render = function(offset){
         this.renderPreview(offset)
@@ -287,7 +417,7 @@ let app;
     Application.prototype.renderDesigners = function(){
         return fetch(apis.render.designers)
             .then( res => res.text())
-            .then( res => this.$components.designers.ul.innerHTML = res)
+            .then( res => this.$components.designers.ul.forEach(x => x.innerHTML = res))
     };
 
     module.Application = Application;

@@ -1,8 +1,29 @@
-<div class='{{class}}'>
-    <h1>{{name}}</h1>
-    <img src="{{images.large}}" /><br>
-    <div>Available Sizes : {{#each sizes}}{{name}} {{/each}}</div>
-    <div>Price : {{price}}</div>
-    <div>Designer: {{designer}}</div>
-    <div class='badges'>{{#each badges}}<div class='{{this}}'></div> {{/each}}</div>
+<div class="row {{class}} hidden-xs hidden-sm">
+    <div class=" col-lg-4">
+        <img src="{{images.large}}" class="img-responsive"/>
+    </div>
+    <div class="col-lg-8">
+        <h1>{{designer}}</h1>
+        <h2>{{name}}</h2>
+        <div class="info-container">
+            <div>Available Sizes : {{#each sizes}}{{name}} {{/each}}</div>
+            <div>Price : {{price}}</div>
+        </div>
+        <button onclick="javascript:Catalog.showPreview();">back</button>
+    </div>
+</div>
+
+<div class="row {{class}} hidden-md hidden-lg">
+    <div class=" col-xs-12 col-sm-12">
+        <img src="{{images.large}}" class="img-responsive"/>
+    </div>
+    <div class="col-xs-12 col-sm-12">
+        <h1>{{designer}}</h1>
+        <h2>{{name}}</h2>
+        <div class="info-container">
+            <div>Available Sizes : {{#each sizes}}{{name}} {{/each}}</div>
+            <div>Price : {{price}}</div>
+        </div>
+        <button onclick="javascript:Catalog.showPreview();">back</button>
+    </div>
 </div>

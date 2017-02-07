@@ -34,7 +34,7 @@
                         <h2> Designers </h2>
                         <div class="designer-scroller">
                             <div class="designer-contents">
-                                <ul id="designer-list">
+                                <ul class="designer-list">
 
                                 </ul>
                             </div>
@@ -48,13 +48,23 @@
                                 <button class='glyphicon glyphicon-remove'></button>
                             </div>
                         </div>
+
                     </div>
+                    
+                        <div class="row sort">
+                            <h2> Sort </h2>
+                            <ul class="sort">
+                                <li data-toggle="on" data-sort="ascending">Price : Low</li>
+                                <li data-toggle="off" data-sort="descending"> Price: High </li>
+                            </ul>
+                        </div>
 
                 </div>
                 <div class="row footer"></div>
             
         </div>
-        <div class="sm-contents col-md-10">
+        <!-- PRODUCT-PREVIEW part of SM-CONTENTS group -->
+        <div class="sm-contents col-md-10 product-preview">
             <div class="row top"></div>
             <div class="row showroom">
                 <div class="col-md-3">
@@ -78,13 +88,17 @@
                 <div class="col-md-12 pagination"> <ul></ul> </div>
             </div>
         </div>
+        <!-- PRODUCT-DETAIL part of SM-CONTENTS group -->
+        <div class="sm-contents col-md-10 product-detail hidden">
+
+        </div>
     </div>
 </desktop>
 
 <mobile class="visible-xs visible-sm">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-header">
-            <a class="button">
+            <a id="mobile-filters" class="button" data-toggle="off">
                 +
             </a>
             <img src='http://nap-assets.nap-live.ext.net-a-porter.com/girdle/images/header/logo-net-a-porter.80097ad030588586.svg' class="logo">
@@ -115,11 +129,40 @@
         </div>
         </div>
     </div>
-    <div class="show mobile-group hidden">
-        <h1>SHOW</h1>
+
+    <div class="product-detail mobile-group hidden">
+
     </div>
+
     <div class="filters mobile-group hidden">
-        <h1>FILTERS</h1>
+        <div class="row designers">
+        <h2> Designers </h2>
+            <div class="designer-scroller">
+                <div class="designer-contents">
+                    <ul class="designer-list">
+
+                    </ul>
+                </div>
+                <div class="up">
+                    <button class='glyphicon glyphicon-menu-up'></button>
+                </div>
+                <div class="down">
+                    <button class='glyphicon glyphicon-menu-down'></button>
+                </div>
+                <div class="clear">
+                    <button class='glyphicon glyphicon-remove'></button>
+                </div>
+            </div>
+    </div>
+        
+        <div class="row sort">
+            <h2> Sort </h2>
+            <ul class="sort">
+                <li data-toggle="on" data-sort="ascending">Price : Low</li>
+                <li data-toggle="off" data-sort="descending"> Price: High </li>
+            </ul>
+        </div>
+        
     </div>
 </mobile>
 
