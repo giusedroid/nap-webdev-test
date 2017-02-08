@@ -409,6 +409,7 @@ let app;
 
         this.$components.mobile.contents.classList.remove('hidden');
         this.$components.desktop.preview.classList.remove('hidden');
+        this.$components.filterToggle.setAttribute('data-toggle', 'off');
     }
 
 
