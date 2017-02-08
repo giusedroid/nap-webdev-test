@@ -376,3 +376,25 @@ mobile .designer-list{
     padding: 10% 5% 10% 5%;
     height: 100%;
 }
+.sm-contents .product-show h1{
+    font-variant: small-caps;
+
+}
+
+.product-show button{
+    background: #000;
+    color:#FFF;
+    outline: 0px;
+    border: 1px solid black;
+    margin-top: 20px;
+}
+
+.mobile-group .product-show h1{
+    font-variant: small-caps;
+    border-bottom: 1px dotted black;
+}
+
+.mobile-group .product-show h2{
+    font-variant: normal;
+    border: 0px;
+}
