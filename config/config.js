@@ -3,6 +3,6 @@ var rootPath = path.normalize(__dirname + '/../');
 
 module.exports = {
 	ROOT: rootPath,
-	PORT: 8200,
-	URL_BASE: `http://localhost:8200`
+	PORT: 3000,
+	URL_BASE: `http://localhost:3000`
 };
