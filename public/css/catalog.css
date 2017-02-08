@@ -369,3 +369,10 @@ mobile .designer-list{
     border: 1px solid #000;
     outline: 0px;
 }
+
+.sm-contents .row.product-show{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10% 5% 10% 5%;
+    height: 100%;
+}
