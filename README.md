@@ -1,122 +1,97 @@
-# NAP Tech Web Dev Test
+# NAP Tech Web Dev Test - Giuseppe Battista
 
-This is a chance for you to show us how you think we should display our products.
+Hi NAP team,
 
-## Task
-
-* Build a product catalogue experience based on two sample APIs.
-
-### Product lists
-    http://127.0.0.1:3000/api/products
-
-### Product details
-    http://127.0.0.1:3000/api/product/$id  
-
-### You might want to include
-
-* Implement pagination/infinite scroll
-* Filters and sorts (eg. lowest price first, select a size)
-* A mix of server and clientside rendering
-* It should be device agnostic
-* A quick view or extended view for product
-
-### Things to note
-
-* We want to see your understanding of JavaScript (including ES6 and ES7) so please stick to VanillaJS.
-* Aesthetics are very important to the Net-a-porter brand but so is performance.
-* Don't worry about header/footer.
-
-The following are examples of the existing mobile and desktop listing pages:
-
-* [Mobile](public/images/mobile.jpg)
-* [Desktop](public/images/desktop.jpg)
-
-You can replicate these or if you think there is something we should be doing, or it should work another way - feel free to be creative but tell us why and what you think we are doing wrong.
-
+thank you for taking my application into account.
 
 ## Setup
-
-To run the app:
-
-```shell
-$ npm install
-$ npm start
+To run the app 
+```
+npm install
+npm run
 ```
 
-# Apis
+The application is hosted at `http://localhost:3000/catalog`
 
-## Products
+## Style
 
-Returns a list of products.
+For this project I chose a minimal flat style, borrowing inspiration for the most of it 
+from your current website. 
+I also chose to display a maximum of four items per catalog page because I wanted
+the user attention focused on them. I wanted to get as close as possible to the high street
+ shopping experience.
 
-Example:
-
+## App 
+The structure of the app is the following. Files/modules I added are marked with (*), modified with (M)
 ```
-GET /api/products/?offset=0&limit=60
-HTTP 200
-Content-Type: application/json
-
-{
-    "offset": 0,
-    "limit": 60,
-    "total": 274,
-    "data": [{
-        "id": 540559,
-        "name": "Roadmaster Waxed-Cotton Jacket",
-        "price": "£550",
-        "designer": "Belstaff",
-        "image": {
-            outfit: "//cache.net-a-porter.com/images/products/543002/543002_ou_sl.jpg"
-        }
-    }, ...]
-}
+.
+├── app.js
+├── config
+│   └── config.js
+├── fixtures
+│   └── products.json
+├── node_modules
+│   ├── co (*)
+│   ├── debug (*)
+│   ├── express
+│   ├── express-hbs
+│   ├── express-params
+│   ├── lodash
+│   ├── node-fetch (*)
+│   └── request
+├── package.json
+├── public
+│   └── css (*)
+|       └── bootstrap.css (*)
+|       └── catalog.css (*)
+│   ├── fonts (*)
+│   ├── images
+│   └── js (*)
+|       └── catalog.js (*)
+├── README.md
+├── routes
+│   ├── catalog.js (*)
+│   ├── designers.js (*)
+│   ├── landing-page.js
+│   ├── product.js
+│   ├── product-list.js (M)
+│   ├── render.js (*)
+│   └── setup-routes.js (M)
+├── utilities
+│   ├── express.js
+│   ├── fsp.js (*)
+│   └── render.js (*)
+└── views
+    ├── catalog.hbs (*)
+    ├── index.hbs
+    ├── layouts
+    │   ├── catalog_wrapper.hbs (*)
+    │   └── default.hbs
+    └── partials
+        ├── catalogHead.hbs (*)
+        ├── catalog_scripts.hbs (*)
+        ├── designers.hbs (*)
+        ├── pageHead.hbs
+        ├── product-error.hbs (*)
+        ├── product-preview.hbs (*)
+        ├── product-show.hbs (*)
+        └── scripts.hbs
 ```
+### External Contents 
+**Bootstrap CSS** I used Twitter Bootstrap 3 to make the layout responsible. I made use of its 12 columns based
+grid layout to arrange the contents
 
-Parameters:
+**CO** is the co-routine module I use to deal with ES6 generators
 
-* `offset` (optional) - defaults to 0
-* `limit` (optional) - defaults to 60
+**Debug** to get logs in debug mode
 
-## Products details
+**node-fetch** is a promise-based implementation of `fetch` method. Works basically like `request`
 
-Example:
+### Homebrew
+**utilities/fsp** wrapper to promisify fs 
+**utilities/render** is where server-side rendering happens (Designer list, products preview and details)
 
-```
-GET /api/product/$id
-HTTP 200
-Content-Type: application/json
+### APIs
 
-{
-    id: 504815,
-    name: "Cutout stretch-jersey dress",
-    price: "£1270",
-    designer: "Donna Karan",
-    onSale: false,
-    sizes: [
-        {
-            id: "00004_S_Clothing",
-            name: "S"
-        },
-        {
-            id: "00005_M_Clothing",
-         name: "M"
-        },
-        {
-            id: "00006_L_Clothing",
-            name: "L"
-        },
-        {
-            id: "00007_XL_Clothing",
-            name: "XL"
-        }
-    ],
-    badges: [
-        "In_Stock"
-    ],
-    images: {
-        outfit: "//cache.net-a-porter.com/images/products/504815/504815_ou_sl.jpg",
-        small: "//cache.net-a-porter.com/images/products/504815/504815_in_sl.jpg",
-        large: "//cache.net-a-porter.com/images/products/504815/504815_in_pp.jpg"
-    }
-}
-```
+I slightly modified `/routes/product-list` to allow some basic sorting and filtering.
+
