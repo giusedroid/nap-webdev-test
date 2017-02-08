@@ -109,37 +109,38 @@ let app;
         
         this.$components.designers.clear.onclick = () => {
             this.clearFilters( 'designer');
-            let lis = Array.prototype.slice.call( Catalog.$components.designers.ul.children);
-            console.log( lis );
-            for( let i in lis ){
-                    lis[i].setAttribute('data-toggle', 'off');
-            }
+            let lis = document.querySelectorAll('ul.designer-list li').forEach(
+                x => x.setAttribute('data-toggle', 'off')
+            );
         };
 
         this.$components.sort.forEach(ul =>{
             ul.addEventListener('click', (e) => {
-                console.log(e.target);
                 if( e.target.tagName === 'LI'){
                     if(!this.filter.sort){
                         this.filter.sort = [];
                     }
 
+                    let sorting = e.target.getAttribute('data-sort');
+                    let lis = document.querySelectorAll(`ul.sort li[data-sort="${sorting}"]`);
+
                     if( e.target.getAttribute('data-toggle') === 'off'){
                         e.stopPropagation();
-                        console.log(e.target.getAttribute('data-toggle'));
                         console.log("Setting sort filter ON");
                         this.clearSort();
-                        e.target.setAttribute('data-toggle', 'on');
-                        this.filter.sort = ['price', e.target.getAttribute('data-sort')];
+                        
+                        lis.forEach(x => x.setAttribute('data-toggle', 'on'));
+                        this.filter.sort = ['price', sorting ];
                     }else{
                         e.stopPropagation();
                         console.log("Setting sort filter OFF");
                         this.clearSort();
-                        e.target.setAttribute('data-toggle', 'off');
+                        lis.forEach(x => x.setAttribute('data-toggle', 'off'));
                         this.clearFilters('sort');
                     }
                     console.log(this.filter);
                     this.renderPreview( 0 ).then(this.renderPagination.bind(this));
+                    this.showPreview();
                 }
             });
         });
@@ -148,21 +149,24 @@ let app;
             x => {
                 x.addEventListener('click', (e) =>{
                 if (e.target.tagName === 'LI') {
+                    let designer = e.target.getAttribute('data-designer');
+                    let lis = document.querySelectorAll(`li[data-designer="${designer}"]`);
                     e.stopPropagation();
                     if(!this.filter.designer){
                         this.filter.designer = [];
                     }
                     if( e.target.getAttribute('data-toggle')==='off'){
-                        this.filter.designer.push(e.target.getAttribute('data-designer'));
-                        e.target.setAttribute('data-toggle', 'on');
+                        this.filter.designer.push(designer);
+                        lis.forEach( x => x.setAttribute('data-toggle', 'on'));
                     }else{
-                        e.target.setAttribute('data-toggle','off');
+                        lis.forEach( x => x.setAttribute('data-toggle', 'off'));
                         let index = this.filter.designer.indexOf( e.target.getAttribute('data-designer'));
                         if( index >-1){
                             this.filter.designer.splice(index, 1);
                         }
                     }
                     this.renderPreview( 0 ).then(this.renderPagination.bind(this));
+                    this.showPreview();
                 }
             });
             }
@@ -196,7 +200,6 @@ let app;
                     console.log(e);
                     if(e.target.tagName === 'IMG'){
                         e.stopPropagation();
-                        // MMMH
                         this.renderShowProduct(e.target.getAttribute('data-show'));
                         this.$components.mobile.group.forEach( x => {
                             if( ! x.classList.contains('hidden')){
