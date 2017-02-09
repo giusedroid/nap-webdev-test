@@ -78,9 +78,7 @@ The structure of the app is the following. Files/modules I added are marked with
         └── scripts.hbs
 ```
 ### External Contents 
-**Bootstrap CSS** I used Twitter Bootstrap 3 to make the layout responsible. I made use of its 12 columns based
-grid layout to arrange the contents
-
+**Bootstrap CSS** I used Twitter Bootstrap 3 to make the layout responsive.
 **CO** is the co-routine module I use to deal with ES6 generators
 
 **Debug** to get logs in debug mode
