@@ -15,16 +15,16 @@ let app;
 (function( module ){
     const apis = {
         product:{
-            byId: id => `http://localhost:8200/api/product/${id}`
+            byId: id => `http://localhost:3000/api/product/${id}`
         },
         products:{
-            all: 'http://localhost:8200/api/products',
-            filter: query => `http://localhost:8200/api/products/?${query}`
+            all: 'http://localhost:3000/api/products',
+            filter: query => `http://localhost:3000/api/products/?${query}`
         },
         render:{
-            preview: id => `http://localhost:8200/api/render/product/${id}/preview`,
-            show: id => `http://localhost:8200/api/render/product/${id}/show`,
-            designers: `http://localhost:8200/api/render/designers`
+            preview: id => `http://localhost:3000/api/render/product/${id}/preview`,
+            show: id => `http://localhost:3000/api/render/product/${id}/show`,
+            designers: `http://localhost:3000/api/render/designers`
         }
     };
 
