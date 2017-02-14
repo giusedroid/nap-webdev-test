@@ -8,7 +8,7 @@ thank you for taking my application into account.
 To run the app 
 ```
 npm install
-npm run
+npm start
 ```
 
 The application is hosted at `http://localhost:3000/catalog`
